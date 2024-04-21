@@ -2,14 +2,14 @@
 
 namespace TokenSchedule
 {
-    public class SingleRow
+    public class ScheduleItem
     {
-        public SingleRow(decimal ratio, DateTime startTime, DateTime? endTime = null)
-        {
-            Ratio = ratio;
-            StartTime = startTime;
-            EndTime = endTime;
+        public decimal Ratio { get; }
+        public DateTime StartTime { get; }
+        public DateTime? EndTime { get; }
 
+        public ScheduleItem(decimal ratio, DateTime startTime, DateTime? endTime = null)
+        {
             if (EndTime.HasValue && StartTime >= EndTime.Value)
             {
                 throw new ArgumentException("End time must be greater than start time.", nameof(startTime));
@@ -18,10 +18,10 @@ namespace TokenSchedule
             {
                 throw new ArgumentException("Ratio must be positive.", nameof(ratio));
             }
-        }
 
-        public decimal Ratio { get; }
-        public DateTime StartTime { get; }
-        public DateTime? EndTime { get; }
+            Ratio = ratio;
+            StartTime = startTime;
+            EndTime = endTime;
+        }
     }
 }
