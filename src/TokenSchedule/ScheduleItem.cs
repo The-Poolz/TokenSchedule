@@ -10,11 +10,11 @@ namespace TokenSchedule
 
         public ScheduleItem(decimal ratio, DateTime startTime, DateTime? endTime = null)
         {
-            if (EndTime.HasValue && StartTime >= EndTime.Value)
+            if (endTime.HasValue && startTime >= endTime.Value)
             {
                 throw new ArgumentException("End time must be greater than start time.", nameof(startTime));
             }
-            if (Ratio <= 0)
+            if (ratio <= 0)
             {
                 throw new ArgumentException("Ratio must be positive.", nameof(ratio));
             }
