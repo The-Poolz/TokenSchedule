@@ -12,6 +12,8 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/The-Poolz/TokenSchedule</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
