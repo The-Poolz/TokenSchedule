@@ -5,14 +5,14 @@ namespace TokenSchedule
     public class ScheduleItem
     {
         public decimal Ratio { get; }
-        public DateTime StartTime { get; }
-        public DateTime? EndTime { get; }
+        public DateTime StartDate { get; }
+        public DateTime? FinishDate { get; }
 
-        public ScheduleItem(decimal ratio, DateTime startTime, DateTime? endTime = null)
+        public ScheduleItem(decimal ratio, DateTime startDate, DateTime? finishDate = null)
         {
-            if (endTime.HasValue && startTime >= endTime.Value)
+            if (finishDate.HasValue && startDate >= finishDate.Value)
             {
-                throw new ArgumentException("End time must be greater than start time.", nameof(startTime));
+                throw new ArgumentException("End time must be greater than start time.", nameof(startDate));
             }
             if (ratio <= 0)
             {
@@ -20,8 +20,8 @@ namespace TokenSchedule
             }
 
             Ratio = ratio;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartDate = startDate;
+            FinishDate = finishDate;
         }
     }
 }

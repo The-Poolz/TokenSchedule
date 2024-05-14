@@ -13,7 +13,7 @@ public class ScheduleItemTests
             var testCode = () => _ = new ScheduleItem(0.1m, DateTime.Now, DateTime.Now.AddDays(-1));
 
             testCode.Should().Throw<ArgumentException>()
-                .WithMessage("End time must be greater than start time. (Parameter 'startTime')");
+                .WithMessage("End time must be greater than start time. (Parameter 'startDate')");
         }
 
         [Fact]
