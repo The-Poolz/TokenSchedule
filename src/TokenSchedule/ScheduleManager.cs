@@ -32,7 +32,7 @@ namespace TokenSchedule
                 throw new ArgumentException("The sum of the ratios must be 1.", nameof(schedule));
             }
 
-            if (schedule[0].StartTime != schedule.Min(x => x.StartTime))
+            if (schedule[0].StartDate != schedule.Min(x => x.StartDate))
             {
                 throw new ArgumentException("The first element must be the TGE (Token Generation Event).", nameof(schedule));
             }
