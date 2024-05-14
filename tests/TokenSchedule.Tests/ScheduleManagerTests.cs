@@ -5,18 +5,20 @@ namespace TokenSchedule.Tests;
 
 public class ScheduleManagerTests
 {
-    private static readonly ScheduleItem tge = new(0.5m, DateTime.Now.AddMinutes(-5));
+    private static readonly ScheduleItem tge = new(0.5m, DateTime.Now.AddMinutes(-10));
 
     private static readonly ScheduleItem[] rest = {
-        new(0.3m, DateTime.Now.AddMinutes(5)),
-        new(0.2m, DateTime.Now.AddMinutes(10))
+        new(0.3m, DateTime.Now.AddMinutes(10)),
+        new(0.1m, DateTime.Now.AddMinutes(20)),
+        new(0.1m, DateTime.Now.AddMinutes(30), DateTime.Now.AddMinutes(40)),
     };
 
     private static readonly IEnumerable<ScheduleItem> schedule = new[]
     {
         tge,
         rest[0],
-        rest[1]
+        rest[1],
+        rest[2],
     };
 
     public class Properties
@@ -45,6 +47,18 @@ public class ScheduleManagerTests
         public void Rest()
         {
             manager.Rest.Should().BeEquivalentTo(rest);
+        }
+
+        [Fact]
+        public void MonthlyVesting()
+        {
+            manager.MonthlyVesting.Should().BeEquivalentTo(new[] { rest[0], rest[1] });
+        }
+
+        [Fact]
+        public void LinearVesting()
+        {
+            manager.LinearVesting.Should().BeEquivalentTo(new[] { rest[2] });
         }
     }
 
