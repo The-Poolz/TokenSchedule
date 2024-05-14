@@ -28,13 +28,27 @@ var schedule = new ScheduleManager(scheduleData);
 
 // Retrieve TGE information
 var tge = schedule.TGE;
-Console.WriteLine($"TGE Ratio: {tge.Ratio}, Start Time: {tge.StartTime}");
+Console.WriteLine($"TGE Ratio: {tge.Ratio}, Start Time: {tge.StartDate}");
 
 // Retrieve the rest of the schedule information
 var restOfSchedule = schedule.Rest;
 foreach (var row in restOfSchedule)
 {
-    Console.WriteLine($"Ratio: {row.Ratio}, Start Time: {row.StartTime}, End Time: {row.EndTime}");
+    Console.WriteLine($"Ratio: {row.Ratio}, Start Time: {row.StartDate}, End Time: {row.FinishDate}");
+}
+
+// Retrieve the linear vesting of the schedule information
+var linear = schedule.LinearVesting;
+foreach (var row in linear)
+{
+    Console.WriteLine($"Ratio: {row.Ratio}, Start Time: {row.StartDate}, End Time: {row.FinishDate}");
+}
+
+// Retrieve the monthly vesting of the schedule information
+var monthly = schedule.MonthlyVesting;
+foreach (var row in monthly)
+{
+    Console.WriteLine($"Ratio: {row.Ratio}, Start Time: {row.StartDate}, End Time: {row.FinishDate}");
 }
 ```
 
