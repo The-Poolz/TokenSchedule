@@ -41,8 +41,8 @@ namespace TokenSchedule
             TGE = schedule[0];
             IsOnlyTGE = schedule.Length == 1;
             Rest = IsOnlyTGE ? Array.Empty<ScheduleItem>() : schedule.Skip(1).ToArray();
-            MonthlyVesting = Rest.Where(x => x.EndTime == null);
-            LinearVesting = Rest.Where(x => x.EndTime != null);
+            MonthlyVesting = Rest.Where(x => x.FinishDate == null);
+            LinearVesting = Rest.Where(x => x.FinishDate != null);
         }
     }
 }
