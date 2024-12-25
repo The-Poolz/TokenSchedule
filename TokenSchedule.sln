@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E1976F27-81A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DDB5240C-78C9-406B-9B5E-5595577F2086}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenSchedule.Tests", "tests\TokenSchedule.Tests\TokenSchedule.Tests.csproj", "{D1F8A56B-EAD1-4567-954E-D916DEAFA937}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokenSchedule.Tests", "tests\TokenSchedule.Tests\TokenSchedule.Tests.csproj", "{D1F8A56B-EAD1-4567-954E-D916DEAFA937}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenSchedule.FluentValidation", "src\TokenSchedule.FluentValidation\TokenSchedule.FluentValidation.csproj", "{EE0274D2-00D1-4FD9-93D8-BE90BD5E6168}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{D1F8A56B-EAD1-4567-954E-D916DEAFA937}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1F8A56B-EAD1-4567-954E-D916DEAFA937}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1F8A56B-EAD1-4567-954E-D916DEAFA937}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE0274D2-00D1-4FD9-93D8-BE90BD5E6168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE0274D2-00D1-4FD9-93D8-BE90BD5E6168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE0274D2-00D1-4FD9-93D8-BE90BD5E6168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE0274D2-00D1-4FD9-93D8-BE90BD5E6168}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{68749023-CE2D-46AF-9427-4676BF5F9D49} = {E1976F27-81A3-4D53-ABAD-B59C5082E5E2}
 		{D1F8A56B-EAD1-4567-954E-D916DEAFA937} = {DDB5240C-78C9-406B-9B5E-5595577F2086}
+		{EE0274D2-00D1-4FD9-93D8-BE90BD5E6168} = {E1976F27-81A3-4D53-ABAD-B59C5082E5E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6BC9FC1F-C841-4550-9C10-A193F14DE296}
