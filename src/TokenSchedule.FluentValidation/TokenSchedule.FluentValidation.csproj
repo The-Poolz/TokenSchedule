@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="..\..\buildConf\.props" />
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
+	<PackageId>TokenSchedule.FluentValidation</PackageId>
+	<Product>TokenSchedule.FluentValidation</Product>
   </PropertyGroup>
 
   <ItemGroup>
