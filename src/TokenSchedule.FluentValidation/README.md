@@ -94,3 +94,7 @@ class Program
 2. **Create a list of schedule items** that you want to validate.  
 3. **Use the `ScheduleValidator`** to validate the entire collection.  
 4. **Handle the validation results**, e.g. by displaying errors or by throwing exceptions.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
