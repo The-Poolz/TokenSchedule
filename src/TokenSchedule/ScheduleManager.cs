@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using FluentValidation;
 using System.Collections.Generic;
+using TokenSchedule.FluentValidation;
 
 namespace TokenSchedule
 {
@@ -17,25 +19,7 @@ namespace TokenSchedule
 
         public ScheduleManager(params ScheduleItem[] schedule)
         {
-            if (schedule == null)
-            {
-                throw new ArgumentNullException(nameof(schedule));
-            }
-
-            if (!schedule.Any())
-            {
-                throw new ArgumentException("Schedule must contain 1 or more elements.", nameof(schedule));
-            }
-
-            if (schedule.Sum(x => x.Ratio) != 1)
-            {
-                throw new ArgumentException("The sum of the ratios must be 1.", nameof(schedule));
-            }
-
-            if (schedule[0].StartDate != schedule.Min(x => x.StartDate))
-            {
-                throw new ArgumentException("The first element must be the TGE (Token Generation Event).", nameof(schedule));
-            }
+            new ScheduleValidator().ValidateAndThrow(schedule);
 
             Schedule = schedule;
             TGE = schedule[0];

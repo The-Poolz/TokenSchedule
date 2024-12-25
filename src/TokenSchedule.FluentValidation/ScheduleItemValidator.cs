@@ -8,6 +8,8 @@ namespace TokenSchedule.FluentValidation
         public ScheduleItemValidator()
         {
             RuleFor(item => item)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
                 .Must(item => item.Ratio > 0)
                 .WithMessage("Ratio must be positive.")
                 .Must(item => !item.FinishDate.HasValue || item.StartDate < item.FinishDate.Value)
