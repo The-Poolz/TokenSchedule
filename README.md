@@ -5,7 +5,7 @@ A simple C# library for managing token distribution schedules.
 ## Features
 
 - Define token distribution schedules with start and end times and ratios.
-- Validate schedules to ensure correct distribution.
+- Validate schedules to ensure correct distribution using [TokenSchedule.FluentValidation](https://github.com/The-Poolz/TokenSchedule/tree/master/src/TokenSchedule.FluentValidation/README.md).
 - Retrieve the Token Generation Event (TGE) and subsequent distribution events.
 
 ## Usage

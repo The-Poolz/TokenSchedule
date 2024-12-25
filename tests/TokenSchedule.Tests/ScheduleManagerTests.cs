@@ -1,5 +1,6 @@
 using Xunit;
 using FluentAssertions;
+using FluentValidation;
 
 namespace TokenSchedule.Tests;
 
@@ -81,8 +82,8 @@ public class ScheduleManagerTests
                 Array.Empty<ScheduleItem>()
             );
 
-            testCode.Should().Throw<ArgumentException>()
-                .WithMessage("Schedule must contain 1 or more elements. (Parameter 'schedule')");
+            testCode.Should().Throw<ValidationException>()
+                .WithMessage("*Schedule must contain 1 or more elements.*");
         }
 
         [Fact]
@@ -93,8 +94,8 @@ public class ScheduleManagerTests
                 new ScheduleItem(0.1m, DateTime.Now.AddMinutes(5))
             );
 
-            testCode.Should().Throw<ArgumentException>()
-                .WithMessage("The sum of the ratios must be 1. (Parameter 'schedule')");
+            testCode.Should().Throw<ValidationException>()
+                .WithMessage("*The sum of the ratios must be 1.*");
         }
 
         [Fact]
@@ -105,8 +106,8 @@ public class ScheduleManagerTests
                 new ScheduleItem(0.1m, DateTime.Now)
             );
 
-            testCode.Should().Throw<ArgumentException>()
-                .WithMessage("The first element must be the TGE (Token Generation Event). (Parameter 'schedule')");
+            testCode.Should().Throw<ValidationException>()
+                .WithMessage("*The first element must be the TGE (Token Generation Event).*");
         }
     }
 }

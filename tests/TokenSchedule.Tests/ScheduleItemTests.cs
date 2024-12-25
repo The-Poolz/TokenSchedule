@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using FluentAssertions;
+using FluentValidation;
 
 namespace TokenSchedule.Tests;
 
@@ -12,8 +13,8 @@ public class ScheduleItemTests
         {
             var testCode = () => _ = new ScheduleItem(0.1m, DateTime.Now, DateTime.Now.AddDays(-1));
 
-            testCode.Should().Throw<ArgumentException>()
-                .WithMessage("End time must be greater than start time. (Parameter 'startDate')");
+            testCode.Should().Throw<ValidationException>()
+                .WithMessage("*End time must be greater than start time.*");
         }
 
         [Fact]
@@ -21,8 +22,8 @@ public class ScheduleItemTests
         {
             var testCode = () => _ = new ScheduleItem(-0.1m, DateTime.Now, DateTime.Now.AddDays(1));
 
-            testCode.Should().Throw<ArgumentException>()
-                .WithMessage("Ratio must be positive. (Parameter 'ratio')");
+            testCode.Should().Throw<ValidationException>()
+                .WithMessage("*Ratio must be positive.*");
         }
     }
 }

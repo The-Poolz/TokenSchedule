@@ -1,0 +1,21 @@
+<Project>
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<Version>1.1.0</Version>
+		<Authors>ArdenHide, Lomet</Authors>
+		<Company>The-Poolz</Company>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/The-Poolz/TokenSchedule</RepositoryUrl>
+		<PackageReleaseNotes>https://github.com/The-Poolz/TokenSchedule/releases/tag/v1.1.0</PackageReleaseNotes>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>
