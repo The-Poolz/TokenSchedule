@@ -12,7 +12,8 @@ namespace TokenSchedule.FluentValidation
                 .NotNull()
                 .Must(item => item.Ratio > 0)
                 .WithMessage("Ratio must be positive.")
-                .Must(item => !item.FinishDate.HasValue || item.StartDate < item.FinishDate.Value)
+                .Must(item => item.StartDate < item.FinishDate!.Value)
+                .When(item => item.FinishDate.HasValue)
                 .WithMessage("End time must be greater than start time.");
         }
     }
