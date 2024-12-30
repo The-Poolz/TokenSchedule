@@ -43,7 +43,7 @@ namespace TokenSchedule.FluentValidation.Tests
                 var testCode = () => _validator.ValidateAndThrow(item);
 
                 testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*Ratio must be positive.*");
+                   .WithMessage("*Ratio must be greater than*");
             }
 
             [Fact]

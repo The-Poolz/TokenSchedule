@@ -76,7 +76,7 @@ public class ScheduleValidatorTests
             var testCode = () => _validator.ValidateAndThrow(schedule);
 
             testCode.Should().Throw<ValidationException>()
-                .WithMessage("*Ratio must be positive.*");
+                .WithMessage("*Ratio must be greater than*");
         }
 
         [Fact]

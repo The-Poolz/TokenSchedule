@@ -9,14 +9,9 @@ namespace TokenSchedule.FluentValidation
         public ScheduleItemValidator()
         {
             RuleFor(item => item)
-                .NotNull()
-                .Must(item => item.Ratio > 0)
-                .WithMessage("Ratio must be positive.");
-            RuleFor(item => item)
                 .Must(item => item.StartDate < item.FinishDate!.Value)
-                .When(item => item.FinishDate.HasValue)
-                .WithMessage("End time must be greater than start time.");
-            RuleFor(item => item)
+                .When(item => item.FinishDate.HasValue,ApplyConditionTo.CurrentValidator)
+                .WithMessage("End time must be greater than start time.")
                 .Must(item => item.Ratio >= MinRatio)
                 .WithMessage("Ratio must be greater than or equal to 1e-18.");
         }
