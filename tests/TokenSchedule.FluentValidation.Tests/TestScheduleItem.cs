@@ -4,7 +4,7 @@ namespace TokenSchedule.FluentValidation.Tests;
 
 public class TestScheduleItem : IValidatedScheduleItem
 {
-    public TestScheduleItem(decimal ratio, DateTime startDate, DateTime? finishDate)
+    public TestScheduleItem(decimal ratio, DateTime startDate, DateTime? finishDate = null)
     {
         Ratio = ratio;
         StartDate = startDate;
