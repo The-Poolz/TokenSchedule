@@ -5,6 +5,7 @@ namespace TokenSchedule.FluentValidation
 {
     public class ScheduleItemValidator : AbstractValidator<IValidatedScheduleItem>
     {
+        public const decimal MinRatio = 0.000000000000000001m;
         public ScheduleItemValidator()
         {
             RuleFor(item => item)
@@ -16,7 +17,7 @@ namespace TokenSchedule.FluentValidation
                 .When(item => item.FinishDate.HasValue)
                 .WithMessage("End time must be greater than start time.");
             RuleFor(item => item)
-                .Must(item => item.Ratio >= 0.000000000000000001m)
+                .Must(item => item.Ratio >= MinRatio)
                 .WithMessage("Ratio must be greater than or equal to 1e-18.");
         }
     }
