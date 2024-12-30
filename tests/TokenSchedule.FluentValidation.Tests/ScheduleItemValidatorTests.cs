@@ -46,6 +46,20 @@ namespace TokenSchedule.FluentValidation.Tests
                    .WithMessage("*Ratio must be positive.*");
             }
 
+            [Theory]
+            [InlineData(0)]
+            [InlineData(-1)]
+            [InlineData(-100)]
+            internal void NonPositiveRatio_ShouldThrowValidationExceptionNoFinish(decimal ratio)
+            {
+                var item = new TestScheduleItem(ratio, DateTime.UtcNow);
+
+                var testCode = () => _validator.ValidateAndThrow(item);
+
+                testCode.Should().Throw<ValidationException>()
+                   .WithMessage("*Ratio must be positive.*");
+            }
+
             [Fact]
             internal void StartDateBiggerThanFinishDate_ShouldThrowValidationException()
             {
