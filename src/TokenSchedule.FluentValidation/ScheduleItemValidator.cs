@@ -9,6 +9,7 @@ namespace TokenSchedule.FluentValidation
         public ScheduleItemValidator()
         {
             RuleFor(item => item)
+                .NotNull()
                 .Must(item => item.Ratio >= MinRatio)
                 .WithMessage("Ratio must be greater than or equal to 1e-18.")
                 .Must(item => item.StartDate < item.FinishDate!.Value)
