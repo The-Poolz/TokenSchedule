@@ -11,7 +11,7 @@ namespace TokenSchedule.FluentValidation
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .Must(item => item.Ratio >= 0.000000000000000001)
-                .WithMessage("Ratio must be greater than 1e-18.")
+                .WithMessage("Ratio must be greater than or equal to 1e-18.")
                 .Must(item => item.StartDate < item.FinishDate!.Value)
                 .When(item => item.FinishDate.HasValue)
                 .WithMessage("End time must be greater than start time.");
