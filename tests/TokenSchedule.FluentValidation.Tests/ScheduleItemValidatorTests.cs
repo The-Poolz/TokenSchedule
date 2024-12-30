@@ -43,7 +43,7 @@ namespace TokenSchedule.FluentValidation.Tests
                 var testCode = () => _validator.ValidateAndThrow(item);
 
                 testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*Ratio must be positive.*");
+                   .WithMessage("*Ratio must be greater than*");
             }
 
             [Theory]
@@ -81,6 +81,17 @@ namespace TokenSchedule.FluentValidation.Tests
 
                 testCode.Should().Throw<ValidationException>()
                    .WithMessage("*End time must be greater than start time.*");
+            }
+
+            [Fact]
+            internal void SmallRato_ShouldThrowValidationException()
+            {
+                var item = new TestScheduleItem(0.0000000000000000001m, DateTime.UtcNow.AddHours(2));
+
+                var testCode = () => _validator.ValidateAndThrow(item);
+
+                testCode.Should().Throw<ValidationException>()
+                   .WithMessage("*Ratio must be greater than or equal to 1e-18.*");
             }
         }
     }

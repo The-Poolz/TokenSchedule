@@ -23,7 +23,7 @@ public class ScheduleItemTests
             var testCode = () => _ = new ScheduleItem(-0.1m, DateTime.Now, DateTime.Now.AddDays(1));
 
             testCode.Should().Throw<ValidationException>()
-                .WithMessage("*Ratio must be positive.*");
+                .WithMessage("*Ratio must be greater than*");
         }
     }
 }
