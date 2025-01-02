@@ -14,6 +14,9 @@ public class ScheduleItemTests
             var testCode = () => _ = new ScheduleItem(0.1m, DateTime.Now, DateTime.Now.AddDays(-1));
 
             testCode.Should().Throw<ValidationException>()
+                .Which.Errors.Should().ContainSingle()
+                .Which.ErrorMessage.Should().Be("End time must be greater than start time.");
+            testCode.Should().Throw<ValidationException>()
                 .WithMessage("*End time must be greater than start time.*");
         }
 
@@ -23,7 +26,8 @@ public class ScheduleItemTests
             var testCode = () => _ = new ScheduleItem(-0.1m, DateTime.Now, DateTime.Now.AddDays(1));
 
             testCode.Should().Throw<ValidationException>()
-                .WithMessage("*Ratio must be greater than*");
+                .Which.Errors.Should().ContainSingle()
+                .Which.ErrorMessage.Should().Be("Ratio must be greater than or equal to 1e-18.");
         }
     }
 }
