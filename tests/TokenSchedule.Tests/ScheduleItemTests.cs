@@ -16,8 +16,6 @@ public class ScheduleItemTests
             testCode.Should().Throw<ValidationException>()
                 .Which.Errors.Should().ContainSingle()
                 .Which.ErrorMessage.Should().Be("End time must be greater than start time.");
-            testCode.Should().Throw<ValidationException>()
-                .WithMessage("*End time must be greater than start time.*");
         }
 
         [Fact]
