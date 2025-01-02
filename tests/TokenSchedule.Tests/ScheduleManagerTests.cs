@@ -83,7 +83,8 @@ public class ScheduleManagerTests
             );
 
             testCode.Should().Throw<ValidationException>()
-                .WithMessage("*Schedule must contain 1 or more elements.*");
+                .Which.Errors.Should().ContainSingle()
+                .Which.ErrorMessage.Should().Be("Schedule must contain 1 or more elements.");
         }
 
         [Fact]
@@ -95,7 +96,8 @@ public class ScheduleManagerTests
             );
 
             testCode.Should().Throw<ValidationException>()
-                .WithMessage("*The sum of the ratios must be 1.*");
+                .Which.Errors.Should().ContainSingle()
+                .Which.ErrorMessage.Should().Be("The sum of the ratios must be 1.");
         }
 
         [Fact]
@@ -107,7 +109,8 @@ public class ScheduleManagerTests
             );
 
             testCode.Should().Throw<ValidationException>()
-                .WithMessage("*The first element must be the TGE (Token Generation Event).*");
+                .Which.Errors.Should().ContainSingle()
+                .Which.ErrorMessage.Should().Be("The first element must be the TGE (Token Generation Event).");
         }
     }
 }

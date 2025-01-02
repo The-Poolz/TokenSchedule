@@ -33,17 +33,14 @@ namespace TokenSchedule.FluentValidation.Tests
             }
 
             [Theory]
-            [InlineData(0)]
-            [InlineData(-1)]
-            [InlineData(-100)]
-            internal void NonPositiveRatio_ShouldThrowValidationException(decimal ratio)
+            [MemberData(nameof(InvalidRatios))]
+            internal void InvalidRatio_ShouldThrowValidationException(TestScheduleItem item)
             {
-                var item = new TestScheduleItem(ratio, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
-
                 var testCode = () => _validator.ValidateAndThrow(item);
 
                 testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*Ratio must be positive.*");
+                    .Which.Errors.Should().ContainSingle()
+                    .Which.ErrorMessage.Should().Be("Ratio must be greater than or equal to 1e-18.");
             }
 
             [Fact]
@@ -54,7 +51,8 @@ namespace TokenSchedule.FluentValidation.Tests
                 var testCode = () => _validator.ValidateAndThrow(item);
 
                 testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*End time must be greater than start time.*");
+                    .Which.Errors.Should().ContainSingle()
+                    .Which.ErrorMessage.Should().Be("End time must be greater than start time.");
             }
 
             [Fact]
@@ -66,8 +64,21 @@ namespace TokenSchedule.FluentValidation.Tests
                 var testCode = () => _validator.ValidateAndThrow(item);
 
                 testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*End time must be greater than start time.*");
+                    .Which.Errors.Should().ContainSingle()
+                    .Which.ErrorMessage.Should().Be("End time must be greater than start time.");
             }
+
+            public static List<object[]> InvalidRatios => new()
+            {
+                new object[] { new TestScheduleItem(0m, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(-1m, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(-100m, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(0.0000000000000000001m, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(0m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
+                new object[] { new TestScheduleItem(-1m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
+                new object[] { new TestScheduleItem(-100m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
+                new object[] { new TestScheduleItem(0.0000000000000000001m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) }
+            };
         }
     }
 }
