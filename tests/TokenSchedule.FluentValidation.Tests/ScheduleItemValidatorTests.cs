@@ -33,31 +33,14 @@ namespace TokenSchedule.FluentValidation.Tests
             }
 
             [Theory]
-            [InlineData(0)]
-            [InlineData(-1)]
-            [InlineData(-100)]
-            internal void NonPositiveRatio_ShouldThrowValidationException(decimal ratio)
+            [MemberData(nameof(InvalidRatios))]
+            internal void InvalidRatio_ShouldThrowValidationException(TestScheduleItem item)
             {
-                var item = new TestScheduleItem(ratio, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
-
                 var testCode = () => _validator.ValidateAndThrow(item);
 
                 testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*Ratio must be greater than*");
-            }
-
-            [Theory]
-            [InlineData(0)]
-            [InlineData(-1)]
-            [InlineData(-100)]
-            internal void NonPositiveRatio_ShouldThrowValidationExceptionNoFinish(decimal ratio)
-            {
-                var item = new TestScheduleItem(ratio, DateTime.UtcNow);
-
-                var testCode = () => _validator.ValidateAndThrow(item);
-
-                testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*Ratio must be greater than*");
+                    .Which.Errors.Should().ContainSingle()
+                    .Which.ErrorMessage.Should().Be("Ratio must be greater than or equal to 1e-18.");
             }
 
             [Fact]
@@ -68,7 +51,8 @@ namespace TokenSchedule.FluentValidation.Tests
                 var testCode = () => _validator.ValidateAndThrow(item);
 
                 testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*End time must be greater than start time.*");
+                    .Which.Errors.Should().ContainSingle()
+                    .Which.ErrorMessage.Should().Be("End time must be greater than start time.");
             }
 
             [Fact]
@@ -80,19 +64,21 @@ namespace TokenSchedule.FluentValidation.Tests
                 var testCode = () => _validator.ValidateAndThrow(item);
 
                 testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*End time must be greater than start time.*");
+                    .Which.Errors.Should().ContainSingle()
+                    .Which.ErrorMessage.Should().Be("End time must be greater than start time.");
             }
 
-            [Fact]
-            internal void SmallRato_ShouldThrowValidationException()
+            public static List<object[]> InvalidRatios => new()
             {
-                var item = new TestScheduleItem(0.0000000000000000001m, DateTime.UtcNow.AddHours(2));
-
-                var testCode = () => _validator.ValidateAndThrow(item);
-
-                testCode.Should().Throw<ValidationException>()
-                   .WithMessage("*Ratio must be greater than or equal to 1e-18.*");
-            }
+                new object[] { new TestScheduleItem(0m, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(-1m, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(-100m, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(0.0000000000000000001m, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(0m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
+                new object[] { new TestScheduleItem(-1m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
+                new object[] { new TestScheduleItem(-100m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
+                new object[] { new TestScheduleItem(0.0000000000000000001m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) }
+            };
         }
     }
 }
