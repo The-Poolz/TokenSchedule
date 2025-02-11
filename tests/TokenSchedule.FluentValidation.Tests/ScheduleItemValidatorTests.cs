@@ -40,7 +40,11 @@ namespace TokenSchedule.FluentValidation.Tests
 
                 testCode.Should().Throw<ValidationException>()
                     .Which.Errors.Should().ContainSingle()
-                    .Which.ErrorMessage.Should().Be("Ratio must be greater than or equal to 1e-18.");
+                    .Which.Should().BeEquivalentTo(new
+                    {
+                        ErrorCode = "MINIMUM_RATIO_1E_MINUS_18",
+                        ErrorMessage = "Ratio must be greater than or equal to 1e-18."
+                    });
             }
 
             [Fact]
@@ -52,7 +56,11 @@ namespace TokenSchedule.FluentValidation.Tests
 
                 testCode.Should().Throw<ValidationException>()
                     .Which.Errors.Should().ContainSingle()
-                    .Which.ErrorMessage.Should().Be("End time must be greater than start time.");
+                    .Which.Should().BeEquivalentTo(new
+                    {
+                        ErrorCode = "END_TIME_MUST_BE_GREATER_THAN_START_TIME",
+                        ErrorMessage = "End time must be greater than start time."
+                    });
             }
 
             [Fact]
@@ -65,7 +73,11 @@ namespace TokenSchedule.FluentValidation.Tests
 
                 testCode.Should().Throw<ValidationException>()
                     .Which.Errors.Should().ContainSingle()
-                    .Which.ErrorMessage.Should().Be("End time must be greater than start time.");
+                    .Which.Should().BeEquivalentTo(new
+                    {
+                        ErrorCode = "END_TIME_MUST_BE_GREATER_THAN_START_TIME",
+                        ErrorMessage = "End time must be greater than start time."
+                    });
             }
 
             public static List<object[]> InvalidRatios => new()

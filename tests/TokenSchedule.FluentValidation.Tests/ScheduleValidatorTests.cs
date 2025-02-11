@@ -31,7 +31,11 @@ public class ScheduleValidatorTests
 
             testCode.Should().Throw<ValidationException>()
                 .Which.Errors.Should().ContainSingle()
-                .Which.ErrorMessage.Should().Be("Schedule must contain 1 or more elements.");
+                .Which.Should().BeEquivalentTo(new
+                {
+                    ErrorCode = "SCHEDULE_IS_EMPTY",
+                    ErrorMessage = "Schedule must contain 1 or more elements."
+                });
         }
 
         [Fact]
@@ -47,7 +51,11 @@ public class ScheduleValidatorTests
 
             testCode.Should().Throw<ValidationException>()
                 .Which.Errors.Should().ContainSingle()
-                .Which.ErrorMessage.Should().Be("The sum of the ratios must be 1.");
+                .Which.Should().BeEquivalentTo(new
+                {
+                    ErrorCode = "SUM_OF_RATIOS_MUST_BE_ONE",
+                    ErrorMessage = "The sum of the ratios must be 1."
+                });
         }
 
         [Fact]
@@ -64,7 +72,11 @@ public class ScheduleValidatorTests
 
             testCode.Should().Throw<ValidationException>()
                 .Which.Errors.Should().ContainSingle()
-                .Which.ErrorMessage.Should().Be("The first element must be the TGE (Token Generation Event).");
+                .Which.Should().BeEquivalentTo(new
+                {
+                    ErrorCode = "FIRST_ELEMENT_MUST_BE_TGE",
+                    ErrorMessage = "The first element must be the TGE (Token Generation Event)."
+                });
         }
 
         [Fact]
@@ -80,7 +92,11 @@ public class ScheduleValidatorTests
 
             testCode.Should().Throw<ValidationException>()
                 .Which.Errors.Should().ContainSingle()
-                .Which.ErrorMessage.Should().Be("Ratio must be greater than or equal to 1e-18.");
+                .Which.Should().BeEquivalentTo(new
+                {
+                    ErrorCode = "MINIMUM_RATIO_1E_MINUS_18",
+                    ErrorMessage = "Ratio must be greater than or equal to 1e-18."
+                });
         }
 
         [Fact]
