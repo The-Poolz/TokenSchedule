@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FluentValidation;
 using System.Collections.Generic;
+using Net.Utils.ErrorHandler.Extensions;
 using TokenSchedule.FluentValidation.Models;
 
 namespace TokenSchedule.FluentValidation
@@ -9,15 +10,27 @@ namespace TokenSchedule.FluentValidation
     {
         public ScheduleValidator()
         {
-            RuleFor(schedule => schedule.ToArray())
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
+            ClassLevelCascadeMode = CascadeMode.Stop;
+
+            RuleFor(schedule => schedule)
+                .NotNull();
+
+            RuleFor(schedule => schedule)
                 .NotEmpty()
-                .WithMessage("Schedule must contain 1 or more elements.")
+                .WithErrorCode(Error.SCHEDULE_IS_EMPTY.ToErrorCode())
+                .WithMessage(Error.SCHEDULE_IS_EMPTY.ToErrorMessage());
+
+            RuleFor(schedule => schedule)
                 .Must(schedule => schedule.Sum(item => item.Ratio) == 1.0m)
-                .WithMessage("The sum of the ratios must be 1.")
+                .WithErrorCode(Error.SUM_OF_RATIOS_MUST_BE_ONE.ToErrorCode())
+                .WithMessage(Error.SUM_OF_RATIOS_MUST_BE_ONE.ToErrorMessage());
+
+            RuleFor(schedule => schedule.ToArray())
                 .Must(schedule => schedule[0].StartDate == schedule.Min(x => x.StartDate))
-                .WithMessage("The first element must be the TGE (Token Generation Event).")
+                .WithErrorCode(Error.FIRST_ELEMENT_MUST_BE_TGE.ToErrorCode())
+                .WithMessage(Error.FIRST_ELEMENT_MUST_BE_TGE.ToErrorMessage());
+
+            RuleFor(schedule => schedule.ToArray())
                 .ForEach(item => item.SetValidator(new ScheduleItemValidator()));
         }
     }
