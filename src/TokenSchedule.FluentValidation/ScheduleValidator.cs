@@ -10,24 +10,15 @@ namespace TokenSchedule.FluentValidation
     {
         public ScheduleValidator()
         {
-            ClassLevelCascadeMode = CascadeMode.Stop;
-
-            RuleFor(schedule => schedule)
-                .NotNull();
-
-            RuleFor(schedule => schedule)
+            RuleFor(schedule => schedule.ToArray())
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
                 .NotEmpty()
-                .WithError(Error.SCHEDULE_IS_EMPTY);
-
-            RuleFor(schedule => schedule)
+                .WithError(Error.SCHEDULE_IS_EMPTY)
                 .Must(schedule => schedule.Sum(item => item.Ratio) == 1.0m)
-                .WithError(Error.SUM_OF_RATIOS_MUST_BE_ONE);
-
-            RuleFor(schedule => schedule.ToArray())
+                .WithError(Error.SUM_OF_RATIOS_MUST_BE_ONE)
                 .Must(schedule => schedule[0].StartDate == schedule.Min(x => x.StartDate))
-                .WithError(Error.FIRST_ELEMENT_MUST_BE_TGE);
-
-            RuleFor(schedule => schedule.ToArray())
+                .WithError(Error.FIRST_ELEMENT_MUST_BE_TGE)
                 .ForEach(item => item.SetValidator(new ScheduleItemValidator()));
         }
     }
