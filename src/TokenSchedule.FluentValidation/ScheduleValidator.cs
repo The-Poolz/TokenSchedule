@@ -17,18 +17,15 @@ namespace TokenSchedule.FluentValidation
 
             RuleFor(schedule => schedule)
                 .NotEmpty()
-                .WithErrorCode(Error.SCHEDULE_IS_EMPTY.ToErrorCode())
-                .WithMessage(Error.SCHEDULE_IS_EMPTY.ToErrorMessage());
+                .WithError(Error.SCHEDULE_IS_EMPTY);
 
             RuleFor(schedule => schedule)
                 .Must(schedule => schedule.Sum(item => item.Ratio) == 1.0m)
-                .WithErrorCode(Error.SUM_OF_RATIOS_MUST_BE_ONE.ToErrorCode())
-                .WithMessage(Error.SUM_OF_RATIOS_MUST_BE_ONE.ToErrorMessage());
+                .WithError(Error.SUM_OF_RATIOS_MUST_BE_ONE);
 
             RuleFor(schedule => schedule.ToArray())
                 .Must(schedule => schedule[0].StartDate == schedule.Min(x => x.StartDate))
-                .WithErrorCode(Error.FIRST_ELEMENT_MUST_BE_TGE.ToErrorCode())
-                .WithMessage(Error.FIRST_ELEMENT_MUST_BE_TGE.ToErrorMessage());
+                .WithError(Error.FIRST_ELEMENT_MUST_BE_TGE);
 
             RuleFor(schedule => schedule.ToArray())
                 .ForEach(item => item.SetValidator(new ScheduleItemValidator()));

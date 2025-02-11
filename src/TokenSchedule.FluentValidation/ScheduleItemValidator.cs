@@ -16,14 +16,12 @@ namespace TokenSchedule.FluentValidation
 
             RuleFor(item => item)
                 .Must(item => item.Ratio >= MinRatio)
-                .WithErrorCode(Error.MINIMUM_RATIO_1E_MINUS_18.ToErrorCode())
-                .WithMessage(Error.MINIMUM_RATIO_1E_MINUS_18.ToErrorMessage());
+                .WithError(Error.MINIMUM_RATIO_1E_MINUS_18);
 
             RuleFor(item => item)
                 .Must(item => item.StartDate < item.FinishDate!.Value)
                 .When(item => item.FinishDate.HasValue, ApplyConditionTo.CurrentValidator)
-                .WithErrorCode(Error.END_TIME_MUST_BE_GREATER_THAN_START_TIME.ToErrorCode())
-                .WithMessage(Error.END_TIME_MUST_BE_GREATER_THAN_START_TIME.ToErrorMessage());
+                .WithError(Error.END_TIME_MUST_BE_GREATER_THAN_START_TIME);
         }
     }
 }
