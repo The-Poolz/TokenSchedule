@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Net.Utils.ErrorHandler" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>

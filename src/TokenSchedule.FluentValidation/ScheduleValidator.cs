@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FluentValidation;
 using System.Collections.Generic;
+using Net.Utils.ErrorHandler.Extensions;
 using TokenSchedule.FluentValidation.Models;
 
 namespace TokenSchedule.FluentValidation
@@ -13,11 +14,11 @@ namespace TokenSchedule.FluentValidation
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Schedule must contain 1 or more elements.")
+                .WithError(Error.SCHEDULE_IS_EMPTY)
                 .Must(schedule => schedule.Sum(item => item.Ratio) == 1.0m)
-                .WithMessage("The sum of the ratios must be 1.")
+                .WithError(Error.SUM_OF_RATIOS_MUST_BE_ONE)
                 .Must(schedule => schedule[0].StartDate == schedule.Min(x => x.StartDate))
-                .WithMessage("The first element must be the TGE (Token Generation Event).")
+                .WithError(Error.FIRST_ELEMENT_MUST_BE_TGE)
                 .ForEach(item => item.SetValidator(new ScheduleItemValidator()));
         }
     }

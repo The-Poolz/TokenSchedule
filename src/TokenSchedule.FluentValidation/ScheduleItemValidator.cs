@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Net.Utils.ErrorHandler.Extensions;
 using TokenSchedule.FluentValidation.Models;
 
 namespace TokenSchedule.FluentValidation
@@ -9,12 +10,13 @@ namespace TokenSchedule.FluentValidation
         public ScheduleItemValidator()
         {
             RuleFor(item => item)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .Must(item => item.Ratio >= MinRatio)
-                .WithMessage("Ratio must be greater than or equal to 1e-18.")
+                .WithError(Error.MINIMUM_RATIO_1E_MINUS_18)
                 .Must(item => item.StartDate < item.FinishDate!.Value)
                 .When(item => item.FinishDate.HasValue, ApplyConditionTo.CurrentValidator)
-                .WithMessage("End time must be greater than start time.");
+                .WithError(Error.END_TIME_MUST_BE_GREATER_THAN_START_TIME);
         }
     }
 }
