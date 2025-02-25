@@ -1,5 +1,4 @@
 ﻿using Xunit;
-using System.Numerics;
 using FluentAssertions;
 using FluentValidation;
 using TokenSchedule.FluentValidation.Models;
@@ -62,8 +61,6 @@ public class ScheduleValidatorTests
         [Fact]
         public void FirstItemNotEarliest_ShouldThrowValidationException()
         {
-            var now = DateTime.UtcNow;
-
             var schedule = new List<IValidatedScheduleItem>
             {
                 new TestScheduleItem(500000000000000000, DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddDays(1)),
