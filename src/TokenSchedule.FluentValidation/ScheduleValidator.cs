@@ -9,7 +9,7 @@ namespace TokenSchedule.FluentValidation
 {
     public class ScheduleValidator : AbstractValidator<IEnumerable<IValidatedScheduleItem>>
     {
-        public BigInteger OneEth => BigInteger.Pow(10, 18);
+        public static BigInteger OneEth => 1000000000000000000;
 
         public ScheduleValidator()
         {
