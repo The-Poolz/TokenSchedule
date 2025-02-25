@@ -14,7 +14,7 @@ namespace TokenSchedule.FluentValidation.Tests
             [Fact]
             internal void ValidItem_ShouldNotThrow()
             {
-                var item = new TestScheduleItem(0.1m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
+                var item = new TestScheduleItem(1L, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
 
                 var testCode = () => _validator.ValidateAndThrow(item);
 
@@ -42,15 +42,15 @@ namespace TokenSchedule.FluentValidation.Tests
                     .Which.Errors.Should().ContainSingle()
                     .Which.Should().BeEquivalentTo(new
                     {
-                        ErrorCode = "MINIMUM_RATIO_1E_MINUS_18",
-                        ErrorMessage = "Ratio must be greater than or equal to 1e-18."
+                        ErrorCode = "RATIO_MUST_BE_POSITIVE",
+                        ErrorMessage = "Ratio must be a positive number."
                     });
             }
 
             [Fact]
             internal void StartDateBiggerThanFinishDate_ShouldThrowValidationException()
             {
-                var item = new TestScheduleItem(0.1m, DateTime.UtcNow.AddHours(2), DateTime.UtcNow);
+                var item = new TestScheduleItem(1L, DateTime.UtcNow.AddHours(2), DateTime.UtcNow);
 
                 var testCode = () => _validator.ValidateAndThrow(item);
 
@@ -67,7 +67,7 @@ namespace TokenSchedule.FluentValidation.Tests
             internal void StartDateEqualToFinishDate_ShouldThrowValidationException()
             {
                 var now = DateTime.UtcNow;
-                var item = new TestScheduleItem(0.1m, now, now);
+                var item = new TestScheduleItem(1L, now, now);
 
                 var testCode = () => _validator.ValidateAndThrow(item);
 
@@ -80,17 +80,15 @@ namespace TokenSchedule.FluentValidation.Tests
                     });
             }
 
-            public static List<object[]> InvalidRatios => new()
-            {
-                new object[] { new TestScheduleItem(0m, DateTime.UtcNow) },
-                new object[] { new TestScheduleItem(-1m, DateTime.UtcNow) },
-                new object[] { new TestScheduleItem(-100m, DateTime.UtcNow) },
-                new object[] { new TestScheduleItem(0.0000000000000000001m, DateTime.UtcNow) },
-                new object[] { new TestScheduleItem(0m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
-                new object[] { new TestScheduleItem(-1m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
-                new object[] { new TestScheduleItem(-100m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
-                new object[] { new TestScheduleItem(0.0000000000000000001m, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) }
-            };
+            public static List<object[]> InvalidRatios =>
+            [
+                new object[] { new TestScheduleItem(0L, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(-1L, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(-100L, DateTime.UtcNow) },
+                new object[] { new TestScheduleItem(0L, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
+                new object[] { new TestScheduleItem(-1L, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
+                new object[] { new TestScheduleItem(-100L, DateTime.UtcNow, DateTime.UtcNow.AddHours(1)) },
+            ];
         }
     }
 }

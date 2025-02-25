@@ -11,7 +11,7 @@ public class ScheduleItemTests
         [Fact]
         internal void WhenFinishTimeLowerThenStartTime_ThrowException()
         {
-            var testCode = () => _ = new ScheduleItem(0.1m, DateTime.Now, DateTime.Now.AddDays(-1));
+            var testCode = () => _ = new ScheduleItem(1000000000000000000, DateTime.Now, DateTime.Now.AddDays(-1));
 
             testCode.Should().Throw<ValidationException>()
                 .Which.Errors.Should().ContainSingle()
@@ -21,11 +21,11 @@ public class ScheduleItemTests
         [Fact]
         internal void WhenRatioIsNegative_ThrowException()
         {
-            var testCode = () => _ = new ScheduleItem(-0.1m, DateTime.Now, DateTime.Now.AddDays(1));
+            var testCode = () => _ = new ScheduleItem(-1L, DateTime.Now, DateTime.Now.AddDays(1));
 
             testCode.Should().Throw<ValidationException>()
                 .Which.Errors.Should().ContainSingle()
-                .Which.ErrorMessage.Should().Be("Ratio must be greater than or equal to 1e-18.");
+                .Which.ErrorMessage.Should().Be("Ratio must be a positive number.");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Numerics;
 using FluentValidation;
 using System.Collections.Generic;
 using Net.Utils.ErrorHandler.Extensions;
@@ -15,7 +16,7 @@ namespace TokenSchedule.FluentValidation
                 .NotNull()
                 .NotEmpty()
                 .WithError(Error.SCHEDULE_IS_EMPTY)
-                .Must(schedule => schedule.Sum(item => item.Ratio) == 1.0m)
+                .Must(schedule => schedule.Aggregate(BigInteger.Zero, (acc, item) => acc + item.Ratio) == BigInteger.Pow(10, 18))
                 .WithError(Error.SUM_OF_RATIOS_MUST_BE_ONE)
                 .Must(schedule => schedule[0].StartDate == schedule.Min(x => x.StartDate))
                 .WithError(Error.FIRST_ELEMENT_MUST_BE_TGE)

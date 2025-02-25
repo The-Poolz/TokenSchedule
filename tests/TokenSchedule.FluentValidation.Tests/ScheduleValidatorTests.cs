@@ -1,4 +1,5 @@
 ﻿using Xunit;
+using System.Numerics;
 using FluentAssertions;
 using FluentValidation;
 using TokenSchedule.FluentValidation.Models;
@@ -43,8 +44,8 @@ public class ScheduleValidatorTests
         {
             var schedule = new List<IValidatedScheduleItem>
             {
-                new TestScheduleItem(0.5m, DateTime.UtcNow, DateTime.UtcNow.AddDays(1)),
-                new TestScheduleItem(0.4m, DateTime.UtcNow.AddDays(1), DateTime.UtcNow.AddDays(2))
+                new TestScheduleItem(500000000000000000, DateTime.UtcNow, DateTime.UtcNow.AddDays(1)),
+                new TestScheduleItem(400000000000000000, DateTime.UtcNow.AddDays(1), DateTime.UtcNow.AddDays(2))
             };
 
             var testCode = () => _validator.ValidateAndThrow(schedule);
@@ -62,10 +63,11 @@ public class ScheduleValidatorTests
         public void FirstItemNotEarliest_ShouldThrowValidationException()
         {
             var now = DateTime.UtcNow;
+
             var schedule = new List<IValidatedScheduleItem>
             {
-                new TestScheduleItem(0.5m, DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddDays(1)),
-                new TestScheduleItem(0.5m, DateTime.UtcNow, DateTime.UtcNow.AddDays(2))
+                new TestScheduleItem(500000000000000000, DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddDays(1)),
+                new TestScheduleItem(500000000000000000, DateTime.UtcNow, DateTime.UtcNow.AddDays(2))
             };
 
             var testCode = () => _validator.ValidateAndThrow(schedule);
@@ -84,7 +86,7 @@ public class ScheduleValidatorTests
         {
             var schedule = new List<IValidatedScheduleItem>
             {
-                new TestScheduleItem(1.0m, DateTime.UtcNow, DateTime.UtcNow.AddDays(1)),
+                new TestScheduleItem(1000000000000000000, DateTime.UtcNow, DateTime.UtcNow.AddDays(1)),
                 new TestScheduleItem(0, DateTime.UtcNow.AddDays(1), DateTime.UtcNow.AddDays(2))
             };
 
@@ -94,8 +96,8 @@ public class ScheduleValidatorTests
                 .Which.Errors.Should().ContainSingle()
                 .Which.Should().BeEquivalentTo(new
                 {
-                    ErrorCode = "MINIMUM_RATIO_1E_MINUS_18",
-                    ErrorMessage = "Ratio must be greater than or equal to 1e-18."
+                    ErrorCode = "RATIO_MUST_BE_POSITIVE",
+                    ErrorMessage = "Ratio must be a positive number."
                 });
         }
 
@@ -104,8 +106,8 @@ public class ScheduleValidatorTests
         {
             var schedule = new List<IValidatedScheduleItem>
             {
-                new TestScheduleItem(0.4m, DateTime.UtcNow, DateTime.UtcNow.AddDays(1)),
-                new TestScheduleItem(0.6m, DateTime.UtcNow.AddDays(1), DateTime.UtcNow.AddDays(2))
+                new TestScheduleItem(600000000000000000, DateTime.UtcNow, DateTime.UtcNow.AddDays(1)),
+                new TestScheduleItem(400000000000000000, DateTime.UtcNow.AddDays(1), DateTime.UtcNow.AddDays(2))
             };
 
             var testCode = () => _validator.ValidateAndThrow(schedule);
