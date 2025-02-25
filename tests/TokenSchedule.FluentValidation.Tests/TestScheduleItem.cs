@@ -1,17 +1,11 @@
-﻿using TokenSchedule.FluentValidation.Models;
+﻿using System.Numerics;
+using TokenSchedule.FluentValidation.Models;
 
 namespace TokenSchedule.FluentValidation.Tests;
 
-public class TestScheduleItem : IValidatedScheduleItem
+public class TestScheduleItem(BigInteger ratio, DateTime startDate, DateTime? finishDate = null) : IValidatedScheduleItem
 {
-    public TestScheduleItem(decimal ratio, DateTime startDate, DateTime? finishDate = null)
-    {
-        Ratio = ratio;
-        StartDate = startDate;
-        FinishDate = finishDate;
-    }
-
-    public decimal Ratio { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime? FinishDate { get; set; }
+    public BigInteger Ratio { get; set; } = ratio;
+    public DateTime StartDate { get; set; } = startDate;
+    public DateTime? FinishDate { get; set; } = finishDate;
 }
