@@ -10,7 +10,7 @@ It is built on top of [FluentValidation](https://github.com/FluentValidation/Flu
   - Validates that `FinishDate` is either not set or later than `StartDate`.
 - **`ScheduleValidator`**: Validates an entire schedule (`IEnumerable<IValidatedScheduleItem>`):
   - Schedule cannot be null or empty.
-  - The sum of all `Ratio` values must be `1.0`.
+  - The sum of all `Ratio` values must be `1e18`.
   - The first item in the schedule must have the earliest `StartDate` (treated as the Token Generation Event).
   - Each individual item is validated by the `ScheduleItemValidator`.
 
@@ -34,14 +34,15 @@ Below is a simple example showing how to use `TokenSchedule.FluentValidation`:
 
 ```csharp
 using System;
-using System.Collections.Generic;
+using System.Numerics;
 using FluentValidation;
+using System.Collections.Generic;
 using TokenSchedule.FluentValidation;
 using TokenSchedule.FluentValidation.Models;
 
 public class MyScheduleItem : IValidatedScheduleItem
 {
-    public decimal Ratio { get; set; }
+    public BigInteger Ratio { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime? FinishDate { get; set; }
 }
@@ -55,13 +56,13 @@ class Program
         {
             new MyScheduleItem
             {
-                Ratio = 0.5m,
+                Ratio = 500000000000000000,
                 StartDate = new DateTime(2024, 1, 1),
                 FinishDate = new DateTime(2024, 6, 1)
             },
             new MyScheduleItem
             {
-                Ratio = 0.5m,
+                Ratio = 400000000000000000,
                 StartDate = new DateTime(2024, 6, 2),
                 FinishDate = new DateTime(2024, 12, 31)
             }

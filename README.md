@@ -18,11 +18,11 @@ using TokenSchedule;
 // Define schedule data
 var scheduleData = new List<ScheduleItem>
 {
-    new ScheduleItem(0.4m, new DateTime(2024, 1, 1)),
-    new ScheduleItem(0.1m, new DateTime(2024, 2, 1)),
-    new ScheduleItem(0.2m, new DateTime(2024, 4, 1)),
-    new ScheduleItem(0.1m, new DateTime(2024, 2, 1), new DateTime(2024, 3, 1)),
-    new ScheduleItem(0.2m, new DateTime(2024, 4, 1), new DateTime(2024, 5, 1))
+    new ScheduleItem(400000000000000000, new DateTime(2024, 1, 1)),
+    new ScheduleItem(100000000000000000, new DateTime(2024, 2, 1)),
+    new ScheduleItem(200000000000000000, new DateTime(2024, 4, 1)),
+    new ScheduleItem(100000000000000000, new DateTime(2024, 2, 1), new DateTime(2024, 3, 1)),
+    new ScheduleItem(200000000000000000, new DateTime(2024, 4, 1), new DateTime(2024, 5, 1))
 };
 
 // Create a new schedule
